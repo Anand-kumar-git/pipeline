@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         AWS_REGION = "ap-southh-1"
-        AWS-ACCOUNT-ID = "787755074992"
+        AWS_ACCOUNT_ID = "787755074992"
         ECR_REPO_NAME = "jenkins-pipeline"
         ECR_REGISTRY = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
         FULL_IMAGE_NAME = "${ECR_REGISTRY}/${ECR_REPO_NAME}:${IMAGE_TAG}"
