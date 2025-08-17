@@ -30,7 +30,7 @@ pipeline {
         stage('Tag Image') {
             steps {
                 script {
-                    sh 'doker tag $ECR_REPO_NAME:$IMAGE_TAG $FULL_IMAGE_NAME'
+                    sh 'docker tag $ECR_REPO_NAME:$IMAGE_TAG $FULL_IMAGE_NAME'
                 }
             } 
         }
