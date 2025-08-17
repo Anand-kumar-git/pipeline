@@ -48,7 +48,7 @@ pipeline {
         stage('Clean-all-images') {
             steps {
                 script {
-                    sh "docker rmi -f {$ECR_REPO_NAME:$IMAGE_TAG}"
+                    sh "docker rmi -f $ECR_REPO_NAME:$IMAGE_TAG"
                 }
             }
         }
