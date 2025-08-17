@@ -10,34 +10,27 @@ pipeline {
     }
 
     stages {
-
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
 
-        stage ('Build Docker Images') {
+        stage('Build Docker Image') {
             steps {
-                script {
-                    sh 'docker build -t $ECR_REPO_NAME:$IMAGE_TAG .'
-
-                }
-
+                sh 'docker build -t $ECR_REPO_NAME:$IMAGE_TAG .'
             }
-
         }
+
         stage('Tag Image') {
             steps {
-                script {
-                    sh 'docker tag $ECR_REPO_NAME:$IMAGE_TAG $FULL_IMAGE_NAME'
-                }
-            } 
+                sh 'docker tag $ECR_REPO_NAME:$IMAGE_TAG $FULL_IMAGE_NAME'
+            }
         }
 
-        stage('login to ECR') {
+        stage('Login to ECR') {
             steps {
-                script {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS-Credentials']]) {
                     sh """
                         aws ecr get-login-password --region $AWS_REGION | \
                         docker login --username AWS --password-stdin $ECR_REGISTRY
@@ -48,15 +41,8 @@ pipeline {
 
         stage('Push to ECR') {
             steps {
-                script {
-                    sh 'docker push $FULL_IMAGE_NAME'
-                }
+                sh 'docker push $FULL_IMAGE_NAME'
             }
         }
-
-
     }
-
-    
-    
 }
