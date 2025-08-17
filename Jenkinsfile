@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        AWS_REGION = "ap-southh-1"
+        AWS_REGION = "ap-south-1"
         AWS_ACCOUNT_ID = "787755074992"
         ECR_REPO_NAME = "jenkins-pipeline"
         IMAGE_TAG = 'V1'
@@ -38,10 +38,10 @@ pipeline {
         stage('login to ECR') {
             steps {
                 script {
-                    sh '''
+                    sh """
                         aws ecr get-login-password --region $AWS_REGION | \
                         docker login --username AWS --password-stdin $ECR_REGISTRY
-                    '''
+                    """
                 }
             }
         }
