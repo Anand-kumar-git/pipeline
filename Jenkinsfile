@@ -44,5 +44,13 @@ pipeline {
                 sh 'docker push $FULL_IMAGE_NAME'
             }
         }
+
+        stage('Clean-all-images') {
+            steps {
+                script {
+                    sh "docker rmi {$FULL_IMAGE_NAME}"
+                }
+            }
+        }
     }
 }
